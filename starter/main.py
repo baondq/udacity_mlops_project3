@@ -84,6 +84,8 @@ def app_inference(request:InferenceRequest):
     """
     logger.info(f"REQUEST: {request}")
     request_dict = request.dict()
+    if "model_config" in request_dict:
+        del request_dict["model_config"]
     logger.info(f"REQUEST_DICT: {request_dict}")
     df = pd.DataFrame([request_dict])
     X, _, _, _ = process_data(
