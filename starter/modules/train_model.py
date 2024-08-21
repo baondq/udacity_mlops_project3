@@ -5,7 +5,7 @@ import pandas as pd
 import pickle
 
 # Add the necessary imports for the starter code.
-from modules.ml import process_data, train_model, inference, compute_model_metrics
+from modules.ml import process_data, train_model, inference, compute_model_metrics, compute_metrics_with_slices_data
 
 # Add code to load in the data.
 data = pd.read_csv("data/cleaned_census.csv")
@@ -15,6 +15,18 @@ print(f"number of samples = {data.shape[0]}")
 train, test = train_test_split(data, test_size=0.20)
 print(f"number of training samples = {train.shape[0]}")
 print(f"number of test samples = {test.shape[0]}")
+
+# get example of >50k for testcase
+example_over_50k = train[train['salary'] == '>50K'].iloc[0]
+print("======")
+print("Example of person earning >50K:")
+print(example_over_50k)
+
+# get example of <=50k for testcase
+example_below_50k = train[train['salary'] == '<=50K'].iloc[0]
+print("======")
+print("Example of person earning <=50K:")
+print(example_below_50k)
 
 cat_features = [
     "workclass",
@@ -54,3 +66,14 @@ precision, recall, fbeta = compute_model_metrics(y=y_test, preds=preds)
 print(f"precision = {precision}")
 print(f"recall = {recall}")
 print(f"fbeta = {fbeta}")
+
+# Metrics on sliced data
+compute_metrics_with_slices_data(
+    df=test,
+    cat_columns=cat_features,
+    label='salary',
+    encoder=encoder,
+    lb=lb,
+    model=model,
+    slice_output_path="slice_output.txt"
+)

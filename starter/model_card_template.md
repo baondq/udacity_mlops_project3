@@ -20,9 +20,9 @@ For evaluation 20% of the 30162 rows were used (6033 instances) in the test set.
 
 ## Metrics
 Three metrics were used for model evaluation (performance on test set):
-* precision: 0.6189873417721519
-* recall: 0.31877444589308995
-* fbeta: 0.4208261617900172
+* precision: 0.7467411545623837
+* recall: 0.26930826057756885
+* fbeta: 0.3958538993089833
 
 ## Ethical Considerations
 Since the dataset consists of public available data with highly aggregated census data no harmful unintended use of the data has to be addressed.

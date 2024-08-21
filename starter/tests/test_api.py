@@ -9,20 +9,20 @@ client = TestClient(app)
 
 
 @pytest.fixture()
-def offline_request_1():
+def request_below_50k():
     """label <=50K from data"""
     request = {
-        "age":39,
-        "workclass":"State-gov",
-        "fnlgt":77516,
-        "education":"Bachelors",
-        "education_num":13,
-        "marital_status":"Never-married",
-        "occupation":"Adm-clerical",
-        "relationship":"Not-in-family",
+        "age":53,
+        "workclass":"Private",
+        "fnlgt":127671,
+        "education":"7th-8th",
+        "education_num":4,
+        "marital_status":"Married-civ-spouse",
+        "occupation":"Machine-op-inspct",
+        "relationship":"Husband",
         "race":"White",
         "sex":"Male",
-        "capital_gain":2174,
+        "capital_gain":0,
         "capital_loss":0,
         "hours_per_week":40,
         "native_country":"United-States"
@@ -31,22 +31,22 @@ def offline_request_1():
 
 
 @pytest.fixture()
-def offline_request_2():
-    """label >=50K from data"""
+def request_above_50k():
+    """label >50K from data"""
     request = {
-        "age":52,
-        "workclass":"Self-emp-not-inc",
-        "fnlgt":209642,
-        "education":"HS-grad",
-        "education_num":9,
+        "age":42,
+        "workclass":"Private",
+        "fnlgt":159449,
+        "education":"Masters",
+        "education_num":14,
         "marital_status":"Married-civ-spouse",
         "occupation":"Exec-managerial",
         "relationship":"Husband",
         "race":"White",
         "sex":"Male",
-        "capital_gain":0,
+        "capital_gain":5178,
         "capital_loss":0,
-        "hours_per_week":45,
+        "hours_per_week":40,
         "native_country":"United-States"
     }
     return request
@@ -57,14 +57,14 @@ def test_get():
     assert response.status_code == 200
     assert response.json() == {"message": "Welcome to the project!"}
 
-def test_post_1(offline_request_1):
-    response = client.post("/inference", json=offline_request_1)
+def test_predict_below_50k(request_below_50k):
+    response = client.post("/inference", json=request_below_50k)
     assert response.status_code == 200
-    assert response.json()["prediction"] in ["<=50K", ">=50K"]
+    assert response.json() == {"prediction": "<=50K"}
 
 
-def test_post_2(offline_request_2):
-    response = client.post("/inference", json=offline_request_2)
+def test_predict_above_50k(request_above_50k):
+    response = client.post("/inference", json=request_above_50k)
     assert response.status_code == 200
-    assert response.json()["prediction"] in ["<=50K", ">=50K"]
+    assert response.json() == {"prediction": ">50K"}
 
