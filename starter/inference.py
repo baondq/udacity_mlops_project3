@@ -3,7 +3,7 @@ import pickle
 
 
 # Request to the Render server
-url = "https://udacity-mlops-project3-9zpf.onrender.com"
+url = "https://udacity-mlops-project3-9zpf.onrender.com/inference"
 with open("model/logistic_regression.pkl", "rb") as f:
     model_dict = pickle.load(f)
     MODEL = model_dict["model"]
@@ -14,26 +14,26 @@ data = {
     "workclass": "Self-emp-not-inc",
     "fnlgt": 209642,
     "education": "HS-grad",
-    "education-num": 9,
-    "marital-status": "Married-civ-spouse",
+    "education_num": 9,
+    "marital_status": "Married-civ-spouse",
     "occupation": "Exec-managerial",
     "relationship": "Husband",
     "race": "White",
     "sex": "Male",
-    "capital-gain": 0,
-    "capital-loss": 0,
-    "hours-per-week": 45,
-    "native-country": "United-States"
+    "capital_gain": 0,
+    "capital_loss": 0,
+    "hours_per_week": 45,
+    "native_country": "United-States"
 }
 cat_features = [
     "workclass",
     "education",
-    "marital-status",
+    "marital_status",
     "occupation",
     "relationship",
     "race",
     "sex",
-    "native-country",
+    "native_country",
 ]
 
 response = requests.post(
